@@ -1,0 +1,7 @@
+# Inherits API requirements
+-r requirements.txt
+
+mediapipe==0.10.8
+opencv-python-headless==4.9.0.80
+numpy==1.26.3
+ffmpeg-python==0.2.0
