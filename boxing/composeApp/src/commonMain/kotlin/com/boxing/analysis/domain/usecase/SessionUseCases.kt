@@ -1,23 +1,23 @@
 package com.boxing.analysis.domain.usecase
 
-import com.boxing.analysis.data.remote.ApiService
+import com.boxing.analysis.data.remote.BoxingApi
 import com.boxing.analysis.data.remote.CreateSessionRequest
 import com.boxing.analysis.domain.model.AnalysisState
 import com.boxing.analysis.domain.model.SessionResults
 import com.boxing.analysis.domain.model.SessionSummary
 import kotlinx.coroutines.delay
 
-class GetSessionHistoryUseCase(private val api: ApiService) {
+class GetSessionHistoryUseCase(private val api: BoxingApi) {
     suspend operator fun invoke(page: Int = 1): List<SessionSummary> =
         api.listSessions(page = page).sessions
 }
 
-class GetSessionResultsUseCase(private val api: ApiService) {
+class GetSessionResultsUseCase(private val api: BoxingApi) {
     suspend operator fun invoke(sessionId: String): SessionResults =
         api.getResults(sessionId)
 }
 
-class SubmitSessionUseCase(private val api: ApiService) {
+class SubmitSessionUseCase(private val api: BoxingApi) {
     /**
      * 1. Create session record → get GCS upload URL
      * 2. Upload video bytes directly to GCS
@@ -40,7 +40,7 @@ class SubmitSessionUseCase(private val api: ApiService) {
     }
 }
 
-class PollAnalysisStatusUseCase(private val api: ApiService) {
+class PollAnalysisStatusUseCase(private val api: BoxingApi) {
     /**
      * Polls every [intervalMs] until state is COMPLETE or FAILED.
      * Emits each intermediate state via [onStatus].
@@ -62,6 +62,6 @@ class PollAnalysisStatusUseCase(private val api: ApiService) {
     }
 }
 
-class GetProgressUseCase(private val api: ApiService) {
+class GetProgressUseCase(private val api: BoxingApi) {
     suspend operator fun invoke() = api.getProgress().dataPoints
 }

@@ -19,7 +19,7 @@ import kotlinx.serialization.Serializable
 @Serializable data class SessionListResponse(val sessions: List<com.boxing.analysis.domain.model.SessionSummary>, val total: Int, val page: Int, val pageSize: Int)
 @Serializable data class ProgressResponse(val dataPoints: List<com.boxing.analysis.domain.model.ProgressPoint>, val sessionsAnalysed: Int)
 
-class ApiService(private val client: HttpClient) {
+class ApiService(private val client: HttpClient) : BoxingApi {
 
     suspend fun register(email: String, password: String, name: String): TokenResponse =
         client.post("$BASE_URL/auth/register") { setBody(RegisterRequest(email, password, name)) }.body()
