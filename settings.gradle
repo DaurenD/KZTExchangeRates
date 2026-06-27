@@ -1,2 +1,2 @@
-include ':app'
-rootProject.name='Exchange'
+include ':app', ':boxing'
+rootProject.name = 'KZTExchangeRates'
