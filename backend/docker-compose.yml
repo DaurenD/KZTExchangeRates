@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: boxing
+      POSTGRES_USER: boxing
+      POSTGRES_PASSWORD: boxing
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    ports:
+      - "8000:8000"
+    env_file: .env
+    environment:
+      DATABASE_URL: "postgresql+asyncpg://boxing:boxing@db:5432/boxing"
+    depends_on:
+      - db
+    volumes:
+      - ./app:/app/app         # hot-reload in dev
+      - ./ml:/app/ml
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.worker
+    env_file: .env
+    environment:
+      DATABASE_URL: "postgresql+asyncpg://boxing:boxing@db:5432/boxing"
+      IS_WORKER: "true"
+    depends_on:
+      - db
+    ports:
+      - "8001:8000"
+
+volumes:
+  pg_data:
