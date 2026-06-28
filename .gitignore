@@ -1,0 +1,34 @@
+# Environment variables — never commit secrets
+.env
+.env.*
+!.env.example
+
+# MediaPipe model weights — downloaded at build time
+backend/ml/pose/pose_landmarker_full.task
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+dist/
+build/
+*.egg-info/
+
+# Gradle / Android
+.gradle/
+app/build/
+boxing/build/
+boxing/composeApp/build/
+*.apk
+*.aab
+local.properties
+
+# IDE
+.idea/
+*.iml
+.DS_Store
+
+# Docker
+*.tar

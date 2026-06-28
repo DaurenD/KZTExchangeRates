@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import BigInteger, Float, ForeignKey, Integer
+from sqlalchemy import BigInteger, Float, ForeignKey, Integer, String
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -33,8 +33,8 @@ class Punch(Base):
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
     session_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("sessions.id", ondelete="CASCADE"), nullable=False, index=True)
     timestamp_ms: Mapped[int] = mapped_column(BigInteger, nullable=False)
-    punch_type: Mapped[str] = mapped_column(str, nullable=False)  # JAB | CROSS | LEFT_HOOK | RIGHT_HOOK | LEFT_UPPERCUT | RIGHT_UPPERCUT
-    hand: Mapped[str] = mapped_column(str, nullable=False)         # LEFT | RIGHT
+    punch_type: Mapped[str] = mapped_column(String(32), nullable=False)
+    hand: Mapped[str] = mapped_column(String(8), nullable=False)
     speed_estimate: Mapped[float] = mapped_column(Float, default=0.0)
     confidence: Mapped[float] = mapped_column(Float, default=0.0)
 

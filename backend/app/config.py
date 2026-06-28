@@ -20,6 +20,8 @@ class Settings(BaseSettings):
     cloud_tasks_queue: str = "boxing-analysis-queue"
     cloud_tasks_location: str = "us-central1"
     worker_url: str = "https://boxing-worker-xxx-uc.a.run.app"
+    api_service_account: str = "boxing-api@boxing-analysis.iam.gserviceaccount.com"
+    worker_service_account: str = "boxing-worker@boxing-analysis.iam.gserviceaccount.com"
 
     # Anthropic
     anthropic_api_key: str = ""
